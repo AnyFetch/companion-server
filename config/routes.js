@@ -14,4 +14,6 @@ var middleware = lib.middleware;
 
 // Routes client requests to handlers
 module.exports = function(server) {
+  server.get('/init/connect', handlers.init.connect.get(config));
+  server.get('/init/callback', handlers.init.callback.get(config));
 };

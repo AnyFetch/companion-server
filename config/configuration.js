@@ -17,10 +17,14 @@ var port = process.env.PORT || 8000;
 
 var mUrl = process.env.MANAGER_URL || 'https://manager.anyfetch.com';
 var aUrl = process.env.API_URL || 'https://api.anyfetch.com';
+var aId =  process.env.ANYFETCH_API_ID;
+var aSecret = process.env.ANYFETCH_API_SECRET;
 
 if(node_env === 'test') {
   mUrl = 'http://localhost:8001';
   aUrl = 'http://localhost:8002';
+  aId = 'test';
+  aSecret = 'test';
 }
 
 // Exports configuration
@@ -30,8 +34,8 @@ module.exports = {
 
   mongoUrl: process.env.MONGO_URL || process.env.MONGOLAB_URI || 'mongodb://localhost/' + node_env,
 
-  appId: process.env.ANYFETCH_API_ID,
-  appSecret: process.env.ANYFETCH_API_SECRET,
+  appId: aId,
+  appSecret: aSecret,
 
   companionUrl: process.env.COMPANION_URL || 'http://localhost:' + port,
   managerUrl: mUrl,

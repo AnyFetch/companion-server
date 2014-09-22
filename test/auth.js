@@ -3,8 +3,8 @@
 var request = require('supertest');
 var async = require ('async');
 var mongoose = require ('mongoose');
+var ObjectId = mongoose.ObjectId;
 
-var config = require('../config/configuration.js');
 var app = require('../app.js');
 var AccessToken = mongoose.model('AccessToken');
 
@@ -19,7 +19,7 @@ describe('Auth handlers', function() {
       request(app)
         .get('/init/connect')
         .expect(302)
-        .expect('Location', config.managerUrl + '/oauth/authorize?client_id=' + config.appId + '&redirect_uri=' + encodeURIComponent(config.companionUrl) + "/init/callback")
+        .expect('Location', 'http://localhost:8001/oauth/authorize?client_id=test&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Finit%2Fcallback')
         .end(done);
     });
   });
@@ -27,7 +27,7 @@ describe('Auth handlers', function() {
   describe('GET /init/callback', function() {
     it("should redirect to the 'localhost/done' location with the token", function(done) {
       request(app)
-        .get('/init/callback?code=' + MOCK_SERVER_TOKEN)
+        .get('/init/callback?code=test')
         .expect(302)
         .expect('Location', 'https://localhost/done/' + MOCK_SERVER_TOKEN)
         .end(done);
@@ -37,7 +37,7 @@ describe('Auth handlers', function() {
       async.waterfall([
         function requestToken(cb) {
           request(app)
-            .get('/init/callback?code=' + MOCK_SERVER_TOKEN)
+            .get('/init/callback?code=test')
             .expect(302)
             .end(cb);
         },
@@ -45,8 +45,8 @@ describe('Auth handlers', function() {
           AccessToken.findOne({ token: MOCK_SERVER_TOKEN }, cb);
         },
         function assertToken(token, cb) {
-          token.should.have.property('company', MOCK_SERVER_COMPANY_ID);
-          token.should.have.property('user', MOCK_SERVER_USER_ID);
+          token.should.have.property('company', new ObjectId(MOCK_SERVER_COMPANY_ID));
+          token.should.have.property('user', new ObjectId(MOCK_SERVER_USER_ID));
           cb();
         }
       ], done);
