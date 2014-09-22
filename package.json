@@ -1,0 +1,37 @@
+{
+  "name": "anyfetch-companion-server",
+  "version": "0.1.0",
+  "description": "The server-side of the AnyFetch companion App",
+  "main": "./lib/",
+  "scripts": {
+    "start": "node ./bin/server",
+    "test": "NODE_ENV=test mocha -R spec",
+    "lint": "jshint lib/ test/ config/ bin/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/AnyFetch/companion-server.git"
+  },
+  "keywords": [
+    "anyfetch"
+  ],
+  "author": "Robin Ricard",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/AnyFetch/companion-server/issues"
+  },
+  "homepage": "https://github.com/AnyFetch/companion-server",
+  "dependencies": {
+    "anyfetch": "^2.0.5",
+    "async": "^0.9.0",
+    "dotenv": "^0.4.0",
+    "rarity": "^2.1.1",
+    "supertest": "^0.13.0"
+  },
+  "devDependencies": {
+    "jshint": "^2.5.6",
+    "mocha": "^1.21.4",
+    "should": "^4.0.4",
+    "sinon": "^1.10.3"
+  }
+}
