@@ -1,5 +1,7 @@
 'use strict';
 
+var Anyfetch = require ('anyfetch');
+
 /**
  * @file Defines the app settings.
  *
@@ -26,6 +28,9 @@ if(node_env === 'test') {
   aId = 'test';
   aSecret = 'test';
 }
+
+Anyfetch.setApiUrl(aUrl);
+Anyfetch.setManagerUrl(mUrl);
 
 // Exports configuration
 module.exports = {

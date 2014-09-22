@@ -1,9 +1,10 @@
 'use strict';
 
+require('should');
 var request = require('supertest');
 var async = require ('async');
 var mongoose = require ('mongoose');
-var ObjectId = mongoose.ObjectId;
+var ObjectId = mongoose.Types.ObjectId;
 
 var app = require('../app.js');
 var AccessToken = mongoose.model('AccessToken');
@@ -14,6 +15,10 @@ var MOCK_SERVER_COMPANY_ID = "52f0bb24c8318c2d65000035";
 var MOCK_SERVER_USER_ID = "52f0bb24c8318c2d65000036";
 
 describe('Auth handlers', function() {
+  beforeEach(function dropTable(done) {
+    AccessToken.remove({}, done);
+  });
+
   describe('GET /init/connect', function() {
     it("should redirect to the AnyFetch grant page", function(done) {
       request(app)
