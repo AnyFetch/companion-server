@@ -9,7 +9,7 @@ describe("Documents endpoint", function() {
   beforeEach(helpers.createFakeToken);
 
   describe("GET /documents", function() {
-    it("should refuse access if token is missing", helpers.checkForAuth('get', '/documents'));
+    it("should refuse access if token is missing", helpers.checkForAuth('get', '/documents?context=test'));
 
     it("should refuse access if query is missing", function(done) {
       request(app)
@@ -22,7 +22,7 @@ describe("Documents endpoint", function() {
 
     it("should accept queries and return results", function(done) {
       request(app)
-        .get('/documents?query=test')
+        .get('/documents?context=test')
         .set('Authorization', 'Bearer ' + helpers.MOCK_SERVER_TOKEN)
         .expect(200)
         .expect(function assert(res) {
@@ -36,7 +36,7 @@ describe("Documents endpoint", function() {
 
     it("should pre-project snippets and title", function(done) {
       request(app)
-        .get('/documents?query=test')
+        .get('/documents?context=test')
         .set('Authorization', 'Bearer ' + helpers.MOCK_SERVER_TOKEN)
         .expect(200)
         .expect(function assert(res) {
@@ -48,11 +48,11 @@ describe("Documents endpoint", function() {
   });
 
   describe("GET /documents/:id", function() {
-    it("should refuse access if token is missing", helpers.checkForAuth('get', '/documents/53ce3726f341e34e309ef0bb'));
+    it("should refuse access if token is missing", helpers.checkForAuth('get', '/documents/53ce3726f341e34e309ef0bb?cotext=test'));
 
     it("should accept access if everything's right", function(done) {
       request(app)
-        .get('/documents/53ce3726f341e34e309ef0bb')
+        .get('/documents/53ce3726f341e34e309ef0bb?context=test')
         .set('Authorization', 'Bearer ' + helpers.MOCK_SERVER_TOKEN)
         .expect(200)
         .expect(function assert(res) {
@@ -65,7 +65,7 @@ describe("Documents endpoint", function() {
 
     it("should pre-project full and title", function(done) {
       request(app)
-        .get('/documents/5252ce4ce4cfcd16f55cfa3b')
+        .get('/documents/5252ce4ce4cfcd16f55cfa3b?context=test')
         .set('Authorization', 'Bearer ' + helpers.MOCK_SERVER_TOKEN)
         .expect(200)
         .expect(function assert(res) {

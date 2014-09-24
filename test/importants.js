@@ -12,7 +12,7 @@ var ImportantDocument = mongoose.model("ImportantDocument");
 
 function createFakeImportantDocument(done) {
   request(app)
-    .post('/events/test/importants/53ce3726f341e34e309ef0bb')
+    .post('/events/test/importants/53ce3726f341e34e309ef0bb?context=test')
     .set('Authorization', 'Bearer ' + helpers.MOCK_SERVER_TOKEN)
     .expect(202)
     .end(done);
@@ -51,7 +51,7 @@ describe("Important documents endpoint", function() {
   });
 
   describe("POST /events/:eventId/importants/:id", function() {
-    it("should refuse access if token is missing", helpers.checkForAuth('post', '/documents/53ce3726f341e34e309ef0bb'));
+    it("should refuse access if token is missing", helpers.checkForAuth('post', '/documents/53ce3726f341e34e309ef0bb?context=test'));
 
     it("should add successfully in the database the document", function(done) {
       async.waterfall([
@@ -74,7 +74,7 @@ describe("Important documents endpoint", function() {
         createFakeImportantDocument,
         function createFakeRedundantImportantDocument(cb) {
           request(app)
-            .post('/events/test/importants/53ce3726f341e34e309ef0bb')
+            .post('/events/test/importants/53ce3726f341e34e309ef0bb?context=test')
             .set('Authorization', 'Bearer ' + helpers.MOCK_SERVER_TOKEN)
             .expect(409)
             .expect(/document already marked as important/i)
