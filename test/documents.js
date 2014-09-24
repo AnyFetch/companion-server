@@ -20,6 +20,7 @@ describe("Documents endpoint", function() {
       request(app)
         .get('/documents?query=test')
         .expect(403)
+        .expect(/token does not match any registered account/i)
         .end(done);
     });
     it("should refuse access if query is missing", function(done) {
@@ -70,6 +71,7 @@ describe("Documents endpoint", function() {
       request(app)
         .get('/documents/5252ce4ce4cfcd16f55cfa3b')
         .expect(403)
+        .expect(/token does not match any registered account/i)
         .end(done);
     });
     it("should accept access if everything's right", function(done) {
