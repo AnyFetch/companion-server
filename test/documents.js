@@ -28,6 +28,7 @@ describe("Documents endpoint", function() {
         .get('/documents')
         .set('Authorization', 'Bearer ' + MOCK_SERVER_TOKEN)
         .expect(409)
+        .expect(/missing query parameter/i)
         .end(done);
     });
     it("should accept queries and return results", function(done) {
