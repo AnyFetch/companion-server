@@ -43,7 +43,7 @@ describe("Important documents endpoint", function() {
         .expect(function assert(res) {
           res.body.should.have.lengthOf(1);
           res.body[0].should.have.property('type', 'file');
-          res.body[0].should.have.property('id', '53ce3726f341e34e309ef0bb');
+          res.body[0].should.have.property('document', '53ce3726f341e34e309ef0bb');
           res.body[0].should.have.property('date', '2014-07-22T10:04:22.441Z');
         })
         .end(done);
@@ -61,7 +61,7 @@ describe("Important documents endpoint", function() {
         },
         function assert(document, cb) {
           document.should.have.property('type', 'file');
-          document.should.have.property('_id', new ObjectId('53ce3726f341e34e309ef0bb'));
+          document.should.have.property('document', new ObjectId('53ce3726f341e34e309ef0bb'));
           document.should.have.property('date', '2014-07-22T10:04:22.441Z');
           document.should.have.property('eventId', 'test');
           cb();
