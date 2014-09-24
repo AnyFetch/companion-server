@@ -38,6 +38,8 @@ before(function setupServers() {
           "title": "My Document",
           "path": "mydoc.doc"
         },
+        "rendered_snippet": "<h1>My Document</h1><code>mydoc.doc</code>",
+        "rendered_title": "My Document",
         "related_count": 0,
         "score": 1
       }
@@ -69,6 +71,8 @@ before(function setupServers() {
       "title": "My Document",
       "path": "mydoc.doc"
     },
+    "rendered_full": "<h1>My Document</h1><p><code>mydoc.doc</code></p>",
+    "rendered_title": "My Document",
     "related_count": 0,
     "score": 1
   });
