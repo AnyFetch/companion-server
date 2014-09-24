@@ -19,6 +19,7 @@ before(function setupServers() {
         "id": "53ce3726f341e34e309ef0bb",
         "identifier": "the_unique_identifier",
         "creation_date": "2014-07-22T10:04:22.441Z",
+        "modification_date": "2014-07-22T10:04:22.441Z",
         "provider": {},
         "company": "52f0bb24c8318c2d65000035",
         "document_type": {
@@ -49,6 +50,7 @@ before(function setupServers() {
     "id": "53ce3726f341e34e309ef0bb",
     "identifier": "the_unique_identifier",
     "creation_date": "2014-07-22T10:04:22.441Z",
+    "modification_date": "2014-07-22T10:04:22.441Z",
     "provider": {},
     "company": "52f0bb24c8318c2d65000035",
     "document_type": {
