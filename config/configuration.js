@@ -44,5 +44,7 @@ module.exports = {
 
   companionUrl: process.env.COMPANION_URL || 'http://localhost:' + port,
   managerUrl: managerUrl,
-  apiUrl: apiUrl
+  apiUrl: apiUrl,
+
+  doneEndpoint: process.env.DONE_ENDPOINT || 'https://localhost/done/'
 };
