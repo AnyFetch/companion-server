@@ -11,6 +11,8 @@ var MOCK_SERVER_TOKEN = "0d7d5dd28e615b2d31cf648df4a5a279e509945b";
 
 before(function setupServers() {
   var apiServer = Anyfetch.createMockServer();
+  apiServer.override("get", "/documents", require('./mock/documents.json'));
+  apiServer.override("get", "/documents/:id", require('./mock/document.json'));
   apiServer.listen(8002);
 
   var managerServer = restify.createServer();
@@ -24,4 +26,4 @@ before(function setupServers() {
   managerServer.listen(8001);
 });
 
-beforeEach(clearDB);
+afterEach(clearDB);

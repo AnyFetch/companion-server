@@ -1,0 +1,36 @@
+{
+    "facets": {},
+    "data": [
+      {
+        "_type": "Document",
+        "id": "53ce3726f341e34e309ef0bb",
+        "identifier": "the_unique_identifier",
+        "creation_date": "2014-07-22T10:04:22.441Z",
+        "modification_date": "2014-07-22T10:04:22.441Z",
+        "provider": {},
+        "company": "52f0bb24c8318c2d65000035",
+        "document_type": {
+          "_type": "DocumentType",
+          "id": "5252ce4ce4cfcd16f55cfa3b",
+          "name": "file",
+          "templates": {
+            "snippet": "<h1>{{{ title }}}</h1><code>{{{ path }}}</code>",
+            "title": "{{ title }}"
+          }
+        },
+        "actions": {},
+        "document_url": "/documents/53ce3726f341e34e309ef0bb",
+        "projection_type": "snippet",
+        "data": {
+          "title": "My Document",
+          "path": "mydoc.doc"
+        },
+        "rendered_snippet": "<h1>My Document</h1><code>mydoc.doc</code>",
+        "rendered_title": "My Document",
+        "related_count": 0,
+        "score": 1
+      }
+    ],
+    "count": 1,
+    "max_score": 1
+  }
