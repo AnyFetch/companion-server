@@ -23,6 +23,7 @@ describe("Documents endpoint", function() {
         .expect(/token does not match any registered account/i)
         .end(done);
     });
+
     it("should refuse access if query is missing", function(done) {
       request(app)
         .get('/documents')
@@ -31,6 +32,7 @@ describe("Documents endpoint", function() {
         .expect(/missing query parameter/i)
         .end(done);
     });
+
     it("should accept queries and return results", function(done) {
       async.waterfall([
         function queryDocuments(cb) {
@@ -49,6 +51,7 @@ describe("Documents endpoint", function() {
         }
       ], done);
     });
+
     it("should pre-project snippets and title", function(done) {
       async.waterfall([
         function queryDocuments(cb) {
@@ -75,6 +78,7 @@ describe("Documents endpoint", function() {
         .expect(/token does not match any registered account/i)
         .end(done);
     });
+
     it("should accept access if everything's right", function(done) {
       async.waterfall([
         function queryDocuments(cb) {
@@ -92,6 +96,7 @@ describe("Documents endpoint", function() {
         }
       ], done);
     });
+
     it("should pre-project full and title", function(done) {
       async.waterfall([
         function queryDocuments(cb) {
