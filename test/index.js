@@ -2,6 +2,9 @@
 
 var Anyfetch = require('anyfetch');
 var restify = require ('restify');
+var clean = require ('mongo-clean');
+
+var config = require('../config/configuration.js');
 
 var MOCK_SERVER_TOKEN = "0d7d5dd28e615b2d31cf648df4a5a279e509945b";
 
@@ -18,4 +21,8 @@ before(function setupServers() {
     next();
   });
   managerServer.listen(8001);
+});
+
+beforeEach(function mongoClean(done) {
+  clean(config.mongoUrl, done);
 });

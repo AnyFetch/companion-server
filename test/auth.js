@@ -15,10 +15,6 @@ var MOCK_SERVER_COMPANY_ID = "52f0bb24c8318c2d65000035";
 var MOCK_SERVER_USER_ID = "52f0bb24c8318c2d65000036";
 
 describe('Auth handlers', function() {
-  beforeEach(function dropTable(done) {
-    AccessToken.remove({}, done);
-  });
-
   describe('GET /init/connect', function() {
     it("should redirect to the AnyFetch grant page", function(done) {
       request(app)
