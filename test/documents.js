@@ -40,7 +40,8 @@ describe("Documents endpoint", function() {
         },
         function assert(res, cb) {
           res.body.should.have.property('length', 1);
-          res.body[0].should.have.propery('type', 'file');
+          res.body[0].should.have.property('type', 'file');
+          res.body[0].should.have.property('id', '5252ce4ce4cfcd16f55cfa3b');
           cb();
         }
       ], done);
@@ -55,7 +56,7 @@ describe("Documents endpoint", function() {
             .end(cb);
         },
         function assert(res, cb) {
-          res.body[0].should.have.property('snippet', "<h1>My Document</h1>");
+          res.body[0].should.have.property('snippet', "<h1>My Document</h1><code>mydoc.doc</code>");
           res.body[0].should.have.property('title', "My Document");
           cb();
         }
@@ -64,11 +65,50 @@ describe("Documents endpoint", function() {
   });
 
   describe("GET /documents/:id", function() {
-    it("should refuse access if token is missing");
-    it("should refuse access if the document doesn't exist");
-    it("should refuse access without the right permissions");
-    it("should accept access with the right permissions");
-    it("should accept access if the document has been shared");
-    it("should pre-project full and title");
+    it("should refuse access if token is missing", function(done) {
+      request(app)
+        .get('/documents/5252ce4ce4cfcd16f55cfa3b')
+        .expect(403)
+        .end(done);
+    });
+    it("should refuse access if the document doesn't exist", function(done) {
+      request(app)
+        .get('/documents/5252ce4ce4cfcd16f55cfa3c')
+        .set('Authentication', 'Bearer ' + MOCK_SERVER_TOKEN)
+        .expect(404)
+        .end(done);
+    });
+    it("should accept access if everything's right", function(done) {
+      async.waterfall([
+        function queryDocuments(cb) {
+          request(app)
+            .get('/documents/5252ce4ce4cfcd16f55cfa3b')
+            .set('Authentication', 'Bearer ' + MOCK_SERVER_TOKEN)
+            .expect(200)
+            .end(cb);
+        },
+        function assert(res, cb) {
+          res.body.should.have.property('type', "file");
+          res.body.should.have.property('id', "5252ce4ce4cfcd16f55cfa3b");
+          cb();
+        }
+      ], done);
+    });
+    it("should pre-project full and title", function(done) {
+      async.waterfall([
+        function queryDocuments(cb) {
+          request(app)
+            .get('/documents/5252ce4ce4cfcd16f55cfa3b')
+            .set('Authentication', 'Bearer ' + MOCK_SERVER_TOKEN)
+            .expect(200)
+            .end(cb);
+        },
+        function assert(res, cb) {
+          res.body.should.have.property('full', "<h1>My Document</h1><p><code>mydoc.doc</code></p>");
+          res.body.should.have.property('title', "My Document");
+          cb();
+        }
+      ], done);
+    });
   });
 });
