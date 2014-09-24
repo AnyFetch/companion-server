@@ -25,7 +25,7 @@ describe("Documents endpoint", function() {
     it("should refuse access if query is missing", function(done) {
       request(app)
         .get('/documents')
-        .set('Authentication', 'Bearer ' + MOCK_SERVER_TOKEN)
+        .set('Authorization', 'Bearer ' + MOCK_SERVER_TOKEN)
         .expect(409)
         .end(done);
     });
@@ -34,14 +34,14 @@ describe("Documents endpoint", function() {
         function queryDocuments(cb) {
           request(app)
             .get('/documents?query=test')
-            .set('Authentication', 'Bearer ' + MOCK_SERVER_TOKEN)
+            .set('Authorization', 'Bearer ' + MOCK_SERVER_TOKEN)
             .expect(200)
             .end(cb);
         },
         function assert(res, cb) {
           res.body.should.have.property('length', 1);
           res.body[0].should.have.property('type', 'file');
-          res.body[0].should.have.property('id', '5252ce4ce4cfcd16f55cfa3b');
+          res.body[0].should.have.property('id', '53ce3726f341e34e309ef0bb');
           cb();
         }
       ], done);
@@ -51,7 +51,7 @@ describe("Documents endpoint", function() {
         function queryDocuments(cb) {
           request(app)
             .get('/documents?query=test')
-            .set('Authentication', 'Bearer ' + MOCK_SERVER_TOKEN)
+            .set('Authorization', 'Bearer ' + MOCK_SERVER_TOKEN)
             .expect(200)
             .end(cb);
         },
@@ -71,25 +71,18 @@ describe("Documents endpoint", function() {
         .expect(403)
         .end(done);
     });
-    it("should refuse access if the document doesn't exist", function(done) {
-      request(app)
-        .get('/documents/5252ce4ce4cfcd16f55cfa3c')
-        .set('Authentication', 'Bearer ' + MOCK_SERVER_TOKEN)
-        .expect(404)
-        .end(done);
-    });
     it("should accept access if everything's right", function(done) {
       async.waterfall([
         function queryDocuments(cb) {
           request(app)
-            .get('/documents/5252ce4ce4cfcd16f55cfa3b')
-            .set('Authentication', 'Bearer ' + MOCK_SERVER_TOKEN)
+            .get('/documents/53ce3726f341e34e309ef0bb')
+            .set('Authorization', 'Bearer ' + MOCK_SERVER_TOKEN)
             .expect(200)
             .end(cb);
         },
         function assert(res, cb) {
           res.body.should.have.property('type', "file");
-          res.body.should.have.property('id', "5252ce4ce4cfcd16f55cfa3b");
+          res.body.should.have.property('id', "53ce3726f341e34e309ef0bb");
           cb();
         }
       ], done);
@@ -99,7 +92,7 @@ describe("Documents endpoint", function() {
         function queryDocuments(cb) {
           request(app)
             .get('/documents/5252ce4ce4cfcd16f55cfa3b')
-            .set('Authentication', 'Bearer ' + MOCK_SERVER_TOKEN)
+            .set('Authorization', 'Bearer ' + MOCK_SERVER_TOKEN)
             .expect(200)
             .end(cb);
         },

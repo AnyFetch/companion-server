@@ -44,7 +44,7 @@ before(function setupServers() {
     "count": 1,
     "max_score": 1
   });
-  apiServer.override("get", "/documents/53ce3726f341e34e309ef0bb", {
+  apiServer.override("get", "/documents/:id", {
     "_type": "Document",
     "id": "53ce3726f341e34e309ef0bb",
     "identifier": "the_unique_identifier",
@@ -83,4 +83,4 @@ before(function setupServers() {
   managerServer.listen(8001);
 });
 
-beforeEach(clearDB);
+afterEach(clearDB);
