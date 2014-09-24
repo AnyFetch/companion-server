@@ -5,7 +5,7 @@ var restify = require ('restify');
 
 var config = require('../config/configuration.js');
 
-var clearDB  = require('mocha-mongoose')(config.mongoUrl);
+var clearDB = require('mocha-mongoose')(config.mongoUrl);
 
 var MOCK_SERVER_TOKEN = "0d7d5dd28e615b2d31cf648df4a5a279e509945b";
 
