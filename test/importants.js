@@ -1,5 +1,6 @@
 "use strict";
 
+var should = require('should');
 var request = require('supertest');
 var async = require('async');
 var mongoose = require ('mongoose');
@@ -16,6 +17,15 @@ function createFakeImportantDocument(done) {
     .expect(202)
     .end(done);
 }
+
+function deleteImportantDocument(cb) {
+  request(app)
+    .del('/events/test/importants/53ce3726f341e34e309ef0bb')
+    .set('Authorization', 'Bearer ' + helpers.MOCK_SERVER_TOKEN)
+    .expect(202)
+    .end(cb);
+}
+
 
 describe("Important documents endpoint", function() {
   beforeEach(helpers.createFakeToken);
@@ -47,7 +57,7 @@ describe("Important documents endpoint", function() {
       async.waterfall([
         createFakeImportantDocument,
         function queryMongo(res, cb) {
-          ImportantDocument.findById(new ObjectId("53ce3726f341e34e309ef0bb"), cb);
+          ImportantDocument.findOne({ document: new ObjectId("53ce3726f341e34e309ef0bb") }, cb);
         },
         function assert(document, cb) {
           document.should.have.property('type', 'file');
@@ -73,4 +83,38 @@ describe("Important documents endpoint", function() {
       ], done);
     });
   });
+
+  describe("DELETE /events/:eventId/importants/:id", function() {
+    beforeEach(helpers.createFakeToken);
+
+    it("should refuse access if token is missing", helpers.checkForAuth('delete', '/documents/53ce3726f341e34e309ef0bb'));
+
+    it("should delete successfully the document from the database", function(done) {
+      async.waterfall([
+        deleteImportantDocument,
+        function queryMongo(res, cb) {
+          ImportantDocument.findOne({ document: new ObjectId("53ce3726f341e34e309ef0bb") }, cb);
+        },
+        function assert(document, cb) {
+          should(document).not.have.property('_id');
+          cb();
+        }
+      ], done);
+    });
+
+    it("should complain if the document is not important yet", function(done) {
+      async.waterfall([
+        deleteImportantDocument,
+        function createFakeRedundantImportantDocument(cb) {
+          request(app)
+            .del('/events/test/importants/53ce3726f341e34e309ef0bb')
+            .set('Authorization', 'Bearer ' + helpers.MOCK_SERVER_TOKEN)
+            .expect(409)
+            .expect(/this document is not important/i)
+            .end(cb);
+        }
+      ], done);
+    });
+  });
+
 });
