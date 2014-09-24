@@ -5,7 +5,6 @@
 
 var restify = require('restify');
 var mongoose = require('mongoose');
-var autoload = require ('auto-load');
 
 var config = require('./config/configuration.js');
 
@@ -21,6 +20,7 @@ server.use(restify.queryParser());
 server.use(restify.bodyParser());
 server.use(restify.gzipResponse());
 server.use(restify.authorizationParser());
+server.use(middleware.injectRedirect);
 
 require("./config/routes.js")(server, handlers);
 

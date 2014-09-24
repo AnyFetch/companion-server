@@ -1,5 +1,7 @@
 'use strict';
 
+var Anyfetch = require ('anyfetch');
+
 /**
  * @file Defines the app settings.
  *
@@ -13,16 +15,36 @@ dotenv.load();
 
 // node_env can either be "development" or "production"
 var node_env = process.env.NODE_ENV || "development";
+var port = process.env.PORT || 8000;
+
+var managerUrl = process.env.MANAGER_URL || 'https://manager.anyfetch.com';
+var apiUrl = process.env.API_URL || 'https://api.anyfetch.com';
+var apiId =  process.env.ANYFETCH_API_ID;
+var apiSecret = process.env.ANYFETCH_API_SECRET;
+
+if(node_env === 'test') {
+  managerUrl = 'http://localhost:8001';
+  apiUrl = 'http://localhost:8002';
+  apiId = 'test';
+  apiSecret = 'test';
+}
+
+Anyfetch.setApiUrl(apiUrl);
+Anyfetch.setManagerUrl(managerUrl);
 
 // Exports configuration
 module.exports = {
   env: node_env,
-  port: process.env.PORT || 8000,
+  port: port,
 
   mongoUrl: process.env.MONGO_URL || process.env.MONGOLAB_URI || 'mongodb://localhost/' + node_env,
 
-  appId: process.env.ANYFETCH_API_ID,
-  appSecret: process.env.ANYFETCH_API_SECRET,
+  appId: apiId,
+  appSecret: apiSecret,
 
-  companionUrl: process.env.COMPANION_URL || process.env.COMPANION_URL
+  companionUrl: process.env.COMPANION_URL || 'http://localhost:' + port,
+  managerUrl: managerUrl,
+  apiUrl: apiUrl,
+
+  doneEndpoint: process.env.DONE_ENDPOINT || 'https://localhost/done/'
 };
