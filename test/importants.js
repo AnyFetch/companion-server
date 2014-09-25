@@ -9,6 +9,7 @@ var ObjectId = mongoose.Types.ObjectId;
 var app = require('../app.js');
 var helpers = require('./helpers.js');
 var ImportantDocument = mongoose.model("ImportantDocument");
+var AccessToken = mongoose.model("AccessToken");
 
 function createFakeImportantDocument(done) {
   request(app)
@@ -47,6 +48,30 @@ describe("Important documents endpoint", function() {
           res.body[0].should.have.property('date', '2014-07-22T10:04:22.441Z');
         })
         .end(done);
+    });
+
+    it("should not find the documents from another company", function(done) {
+      async.waterfall([
+        function createWrongToken(cb) {
+          var accessToken = new AccessToken({
+            token: 'wrongCompany',
+            company: new ObjectId('111111111111111111111111'),
+            user: new ObjectId('111111111111111111111111')
+          });
+          accessToken.save(cb);
+        },
+        function tryAccess(accessToken, affected, cb) {
+          request(app)
+            .get('/events/test/importants')
+            .set('Authorization', 'Bearer wrongCompany')
+            .expect(200)
+            .end(cb);
+        },
+        function assertEmpty(res, cb) {
+          res.body.should.have.lengthOf(0);
+          cb();
+        }
+      ], done);
     });
   });
 
