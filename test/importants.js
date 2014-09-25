@@ -62,8 +62,11 @@ describe("Important documents endpoint", function() {
         function assert(document, cb) {
           document.should.have.property('type', 'file');
           document.should.have.property('document', new ObjectId('53ce3726f341e34e309ef0bb'));
-          document.should.have.property('date', '2014-07-22T10:04:22.441Z');
+          document.should.have.property('date', new Date('2014-07-22T10:04:22.441Z'));
           document.should.have.property('eventId', 'test');
+          document.should.have.property('title', 'My Document');
+          document.should.have.property('full', '<h1>My Document</h1><p><code>mydoc.doc</code></p>');
+          document.should.have.property('snippet', '<h1>My Document</h1><code>mydoc.doc</code>');
           cb();
         }
       ], done);
