@@ -14,7 +14,7 @@ function createFakeImportantDocument(done) {
   request(app)
     .post('/events/test/importants/' + helpers.MOCK_SERVER_DOC_ID + '?context=test')
     .set('Authorization', 'Bearer ' + helpers.MOCK_SERVER_TOKEN)
-    .expect(202)
+    .expect(204)
     .end(done);
 }
 
@@ -22,7 +22,7 @@ function deleteImportantDocument(done) {
   request(app)
     .del('/events/test/importants/' + helpers.MOCK_SERVER_DOC_ID)
     .set('Authorization', 'Bearer ' + helpers.MOCK_SERVER_TOKEN)
-    .expect(202)
+    .expect(204)
     .end(done);
 }
 
