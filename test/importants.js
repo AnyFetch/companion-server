@@ -12,18 +12,18 @@ var ImportantDocument = mongoose.model("ImportantDocument");
 
 function createFakeImportantDocument(done) {
   request(app)
-    .post('/events/test/importants/53ce3726f341e34e309ef0bb?context=test')
+    .post('/events/test/importants/' + helpers.MOCK_SERVER_DOC_ID + '?context=test')
     .set('Authorization', 'Bearer ' + helpers.MOCK_SERVER_TOKEN)
     .expect(202)
     .end(done);
 }
 
-function deleteImportantDocument(cb) {
+function deleteImportantDocument(done) {
   request(app)
-    .del('/events/test/importants/53ce3726f341e34e309ef0bb')
+    .del('/events/test/importants/' + helpers.MOCK_SERVER_DOC_ID)
     .set('Authorization', 'Bearer ' + helpers.MOCK_SERVER_TOKEN)
     .expect(202)
-    .end(cb);
+    .end(done);
 }
 
 
@@ -43,7 +43,7 @@ describe("Important documents endpoint", function() {
         .expect(function assert(res) {
           res.body.should.have.lengthOf(1);
           res.body[0].should.have.property('type', 'file');
-          res.body[0].should.have.property('document', '53ce3726f341e34e309ef0bb');
+          res.body[0].should.have.property('document', helpers.MOCK_SERVER_DOC_ID);
           res.body[0].should.have.property('date', '2014-07-22T10:04:22.441Z');
         })
         .end(done);
@@ -51,17 +51,18 @@ describe("Important documents endpoint", function() {
   });
 
   describe("POST /events/:eventId/importants/:id", function() {
-    it("should refuse access if token is missing", helpers.checkForAuth('post', '/events/test/importants/53ce3726f341e34e309ef0bb?context=test'));
+    it("should refuse access if token is missing", helpers.checkForAuth('post', '/events/test/importants/' + helpers.MOCK_SERVER_DOC_ID + '?context=test'));
 
     it("should add successfully in the database the document", function(done) {
       async.waterfall([
         createFakeImportantDocument,
         function queryMongo(res, cb) {
-          ImportantDocument.findOne({ document: new ObjectId("53ce3726f341e34e309ef0bb") }, cb);
+          ImportantDocument.findOne({ document: new ObjectId(helpers.MOCK_SERVER_DOC_ID) }, cb);
         },
         function assert(document, cb) {
           document.should.have.property('type', 'file');
-          document.should.have.property('document', new ObjectId('53ce3726f341e34e309ef0bb'));
+          document.should.have.property('document', new ObjectId(helpers.MOCK_SERVER_DOC_ID));
+          document.should.have.property('company', new ObjectId(helpers.MOCK_SERVER_COMPANY_ID));
           document.should.have.property('date', new Date('2014-07-22T10:04:22.441Z'));
           document.should.have.property('eventId', 'test');
           document.should.have.property('title', 'My Document');
@@ -77,7 +78,7 @@ describe("Important documents endpoint", function() {
         createFakeImportantDocument,
         function createFakeRedundantImportantDocument(res, cb) {
           request(app)
-            .post('/events/test/importants/53ce3726f341e34e309ef0bb?context=test')
+            .post('/events/test/importants/' + helpers.MOCK_SERVER_DOC_ID + '?context=test')
             .set('Authorization', 'Bearer ' + helpers.MOCK_SERVER_TOKEN)
             .expect(409)
             .expect(/document already marked as important/i)
@@ -88,15 +89,15 @@ describe("Important documents endpoint", function() {
   });
 
   describe("DELETE /events/:eventId/importants/:id", function() {
-    beforeEach(helpers.createFakeToken);
+    beforeEach(createFakeImportantDocument);
 
-    it("should refuse access if token is missing", helpers.checkForAuth('delete', '/events/test/importants/53ce3726f341e34e309ef0bb'));
+    it("should refuse access if token is missing", helpers.checkForAuth('delete', '/events/test/importants/' + helpers.MOCK_SERVER_DOC_ID));
 
     it("should delete successfully the document from the database", function(done) {
       async.waterfall([
         deleteImportantDocument,
         function queryMongo(res, cb) {
-          ImportantDocument.findOne({ document: new ObjectId("53ce3726f341e34e309ef0bb") }, cb);
+          ImportantDocument.findOne({ document: new ObjectId(helpers.MOCK_SERVER_DOC_ID) }, cb);
         },
         function assert(document, cb) {
           should(document).not.have.property('_id');
@@ -108,9 +109,9 @@ describe("Important documents endpoint", function() {
     it("should complain if the document is not important yet", function(done) {
       async.waterfall([
         deleteImportantDocument,
-        function createFakeRedundantImportantDocument(cb) {
+        function createFakeRedundantImportantDocument(res, cb) {
           request(app)
-            .del('/events/test/importants/53ce3726f341e34e309ef0bb')
+            .del('/events/test/importants/' + helpers.MOCK_SERVER_DOC_ID)
             .set('Authorization', 'Bearer ' + helpers.MOCK_SERVER_TOKEN)
             .expect(409)
             .expect(/this document is not important/i)
