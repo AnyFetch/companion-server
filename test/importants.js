@@ -51,7 +51,7 @@ describe("Important documents endpoint", function() {
   });
 
   describe("POST /events/:eventId/importants/:id", function() {
-    it("should refuse access if token is missing", helpers.checkForAuth('post', '/documents/53ce3726f341e34e309ef0bb?context=test'));
+    it("should refuse access if token is missing", helpers.checkForAuth('post', '/events/test/importants/53ce3726f341e34e309ef0bb?context=test'));
 
     it("should add successfully in the database the document", function(done) {
       async.waterfall([
@@ -72,7 +72,7 @@ describe("Important documents endpoint", function() {
     it("should complain if the document is already there", function(done) {
       async.waterfall([
         createFakeImportantDocument,
-        function createFakeRedundantImportantDocument(cb) {
+        function createFakeRedundantImportantDocument(res, cb) {
           request(app)
             .post('/events/test/importants/53ce3726f341e34e309ef0bb?context=test')
             .set('Authorization', 'Bearer ' + helpers.MOCK_SERVER_TOKEN)
@@ -87,7 +87,7 @@ describe("Important documents endpoint", function() {
   describe("DELETE /events/:eventId/importants/:id", function() {
     beforeEach(helpers.createFakeToken);
 
-    it("should refuse access if token is missing", helpers.checkForAuth('delete', '/documents/53ce3726f341e34e309ef0bb'));
+    it("should refuse access if token is missing", helpers.checkForAuth('delete', '/events/test/importants/53ce3726f341e34e309ef0bb'));
 
     it("should delete successfully the document from the database", function(done) {
       async.waterfall([
