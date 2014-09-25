@@ -3,30 +3,18 @@
 var request = require('supertest');
 
 var app = require('../app.js');
-
-var MOCK_SERVER_TOKEN = "0d7d5dd28e615b2d31cf648df4a5a279e509945b";
+var helpers = require('./helpers.js');
 
 describe("Documents endpoint", function() {
-  beforeEach(function createTokenInMongo(done) {
-    request(app)
-      .get('/init/callback?code=test')
-      .expect(302)
-      .end(done);
-  });
+  beforeEach(helpers.createFakeToken);
 
   describe("GET /documents", function() {
-    it("should refuse access if token is missing", function(done) {
-      request(app)
-        .get('/documents?query=test')
-        .expect(403)
-        .expect(/token does not match any registered account/i)
-        .end(done);
-    });
+    it("should refuse access if token is missing", helpers.checkForAuth('get', '/documents?context=test'));
 
     it("should refuse access if query is missing", function(done) {
       request(app)
         .get('/documents')
-        .set('Authorization', 'Bearer ' + MOCK_SERVER_TOKEN)
+        .set('Authorization', 'Bearer ' + helpers.MOCK_SERVER_TOKEN)
         .expect(409)
         .expect(/missing query parameter/i)
         .end(done);
@@ -34,8 +22,8 @@ describe("Documents endpoint", function() {
 
     it("should accept queries and return results", function(done) {
       request(app)
-        .get('/documents?query=test')
-        .set('Authorization', 'Bearer ' + MOCK_SERVER_TOKEN)
+        .get('/documents?context=test')
+        .set('Authorization', 'Bearer ' + helpers.MOCK_SERVER_TOKEN)
         .expect(200)
         .expect(function assert(res) {
           res.body.should.have.lengthOf(1);
@@ -48,8 +36,8 @@ describe("Documents endpoint", function() {
 
     it("should pre-project snippets and title", function(done) {
       request(app)
-        .get('/documents?query=test')
-        .set('Authorization', 'Bearer ' + MOCK_SERVER_TOKEN)
+        .get('/documents?context=test')
+        .set('Authorization', 'Bearer ' + helpers.MOCK_SERVER_TOKEN)
         .expect(200)
         .expect(function assert(res) {
           res.body[0].should.have.property('snippet', "<h1>My Document</h1><code>mydoc.doc</code>");
@@ -60,18 +48,12 @@ describe("Documents endpoint", function() {
   });
 
   describe("GET /documents/:id", function() {
-    it("should refuse access if token is missing", function(done) {
-      request(app)
-        .get('/documents/5252ce4ce4cfcd16f55cfa3b')
-        .expect(403)
-        .expect(/token does not match any registered account/i)
-        .end(done);
-    });
+    it("should refuse access if token is missing", helpers.checkForAuth('get', '/documents/53ce3726f341e34e309ef0bb?cotext=test'));
 
     it("should accept access if everything's right", function(done) {
       request(app)
-        .get('/documents/53ce3726f341e34e309ef0bb')
-        .set('Authorization', 'Bearer ' + MOCK_SERVER_TOKEN)
+        .get('/documents/53ce3726f341e34e309ef0bb?context=test')
+        .set('Authorization', 'Bearer ' + helpers.MOCK_SERVER_TOKEN)
         .expect(200)
         .expect(function assert(res) {
           res.body.should.have.property('type', "file");
@@ -83,8 +65,8 @@ describe("Documents endpoint", function() {
 
     it("should pre-project full and title", function(done) {
       request(app)
-        .get('/documents/5252ce4ce4cfcd16f55cfa3b')
-        .set('Authorization', 'Bearer ' + MOCK_SERVER_TOKEN)
+        .get('/documents/5252ce4ce4cfcd16f55cfa3b?context=test')
+        .set('Authorization', 'Bearer ' + helpers.MOCK_SERVER_TOKEN)
         .expect(200)
         .expect(function assert(res) {
           res.body.should.have.property('full', "<h1>My Document</h1><p><code>mydoc.doc</code></p>");
