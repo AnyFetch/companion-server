@@ -4,7 +4,7 @@
   "description": "The server-side of the AnyFetch companion App",
   "main": "./lib/",
   "scripts": {
-    "start": "./bin/server",
+    "start": "node ./bin/server",
     "test": "NODE_ENV=test mocha -R spec",
     "lint": "jshint lib/ test/ config/ bin/"
   },
