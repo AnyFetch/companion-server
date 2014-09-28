@@ -44,7 +44,7 @@ describe("Important documents endpoint", function() {
         .expect(function assert(res) {
           res.body.should.have.lengthOf(1);
           res.body[0].should.have.property('type', 'file');
-          res.body[0].should.have.property('document', helpers.MOCK_SERVER_DOC_ID);
+          res.body[0].should.have.property('documentId', helpers.MOCK_SERVER_DOC_ID);
           res.body[0].should.have.property('date', '2014-07-22T10:04:22.441Z');
         })
         .end(done);
@@ -55,8 +55,8 @@ describe("Important documents endpoint", function() {
         function createWrongToken(cb) {
           var accessToken = new AccessToken({
             token: 'wrongCompany',
-            company: new ObjectId('111111111111111111111111'),
-            user: new ObjectId('111111111111111111111111')
+            companyId: new ObjectId('111111111111111111111111'),
+            userId: new ObjectId('111111111111111111111111')
           });
           accessToken.save(cb);
         },
@@ -82,12 +82,12 @@ describe("Important documents endpoint", function() {
       async.waterfall([
         createFakeImportantDocument,
         function queryMongo(res, cb) {
-          ImportantDocument.findOne({ document: new ObjectId(helpers.MOCK_SERVER_DOC_ID) }, cb);
+          ImportantDocument.findOne({ documentId: new ObjectId(helpers.MOCK_SERVER_DOC_ID) }, cb);
         },
         function assert(document, cb) {
           document.should.have.property('type', 'file');
-          document.should.have.property('document', new ObjectId(helpers.MOCK_SERVER_DOC_ID));
-          document.should.have.property('company', new ObjectId(helpers.MOCK_SERVER_COMPANY_ID));
+          document.should.have.property('documentId', new ObjectId(helpers.MOCK_SERVER_DOC_ID));
+          document.should.have.property('companyId', new ObjectId(helpers.MOCK_SERVER_COMPANY_ID));
           document.should.have.property('date', new Date('2014-07-22T10:04:22.441Z'));
           document.should.have.property('eventId', 'test');
           document.should.have.property('title', 'My Document');

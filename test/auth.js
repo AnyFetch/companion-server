@@ -42,8 +42,8 @@ describe('Auth handlers', function() {
           AccessToken.findOne({ token: helpers.MOCK_SERVER_TOKEN }, cb);
         },
         function assertToken(token, cb) {
-          token.should.have.property('company', new ObjectId(helpers.MOCK_SERVER_COMPANY_ID));
-          token.should.have.property('user', new ObjectId(helpers.MOCK_SERVER_USER_ID));
+          token.should.have.property('companyId', new ObjectId(helpers.MOCK_SERVER_COMPANY_ID));
+          token.should.have.property('userId', new ObjectId(helpers.MOCK_SERVER_USER_ID));
           cb();
         }
       ], done);
