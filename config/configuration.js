@@ -32,6 +32,15 @@ if(node_env === 'test') {
 Anyfetch.setApiUrl(apiUrl);
 Anyfetch.setManagerUrl(managerUrl);
 
+// Third party services
+var services = {};
+services.opbeat = {
+  organization_id: process.env.OPBEAT_ORG_ID,
+  app_id: process.env.OPBEAT_APP_ID,
+  secret_token: process.env.OPBEAT_TOKEN,
+  silent: true,
+};
+
 // Exports configuration
 module.exports = {
   env: node_env,
@@ -46,5 +55,7 @@ module.exports = {
   managerUrl: managerUrl,
   apiUrl: apiUrl,
 
-  doneEndpoint: process.env.DONE_ENDPOINT || 'https://localhost/done/'
+  doneEndpoint: process.env.DONE_ENDPOINT || 'https://localhost/done/',
+
+  services: services
 };

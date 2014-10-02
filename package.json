@@ -29,7 +29,8 @@
     "mongoose": "^3.8.16",
     "rarity": "^2.1.1",
     "restify": "^2.8.2",
-    "supertest": "^0.13.0"
+    "supertest": "^0.13.0",
+    "opbeat": "~1.0.0"
   },
   "devDependencies": {
     "jshint": "^2.5.6",
