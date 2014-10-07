@@ -1,4 +1,8 @@
 #!/bin/env node
+"use strict";
+
+require('heroku-self-ping')(process.env.COMPANION_URL);
+
 
 var config = require("../config/configuration.js");
 var server = require('../app.js');
