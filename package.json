@@ -4,7 +4,7 @@
   "description": "The server-side of the AnyFetch companion App",
   "main": "./lib/",
   "scripts": {
-    "start": "node ./bin/server",
+    "start": "node ./bin/server.js",
     "test": "NODE_ENV=test mocha -R spec",
     "lint": "jshint lib/ test/ config/ bin/"
   },
@@ -29,7 +29,9 @@
     "mongoose": "^3.8.16",
     "rarity": "^2.1.1",
     "restify": "^2.8.2",
-    "supertest": "^0.13.0"
+    "supertest": "^0.13.0",
+    "opbeat": "~1.0.0",
+    "heroku-self-ping": "~1.1.1"
   },
   "devDependencies": {
     "jshint": "^2.5.6",
