@@ -4,7 +4,11 @@
     "identifier": "the_unique_identifier",
     "creation_date": "2014-07-22T10:04:22.441Z",
     "modification_date": "2014-07-22T10:04:22.441Z",
-    "provider": {},
+    "provider": {
+      "client": {
+        "name": "Google Drive"
+      }
+    },
     "company": "52f0bb24c8318c2d65000035",
     "document_type": {
       "_type": "DocumentType",
