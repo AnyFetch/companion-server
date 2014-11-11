@@ -29,6 +29,7 @@
     "mongoose": "^3.8.16",
     "rarity": "^2.1.1",
     "restify": "^2.8.2",
+    "restify-logger": "^2.0.1",
     "supertest": "^0.13.0",
     "opbeat": "~1.0.0",
     "heroku-self-ping": "~1.1.1"
