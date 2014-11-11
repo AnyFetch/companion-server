@@ -12,15 +12,17 @@ mongoose.connect(config.mongoUrl);
 
 var lib = require('./lib/');
 var handlers = lib.handlers;
-var middleware = lib.middleware;
+var middlewares = lib.middlewares;
 
 var server = restify.createServer();
 
+
+server.use(middlewares.logger);
 server.use(restify.queryParser());
 server.use(restify.bodyParser());
 server.use(restify.gzipResponse());
 server.use(restify.authorizationParser());
-server.use(middleware.injectRedirect);
+server.use(middlewares.injectRedirect);
 
 require("./config/routes.js")(server, handlers);
 
