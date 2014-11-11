@@ -2,13 +2,14 @@
 
 require('should');
 var request = require('supertest');
-var async = require ('async');
-var mongoose = require ('mongoose');
+var async = require('async');
+var mongoose = require('mongoose');
 var ObjectId = mongoose.Types.ObjectId;
 
 var app = require('../app.js');
 var helpers = require('./helpers.js');
 var AccessToken = mongoose.model('AccessToken');
+
 
 describe('Auth handlers', function() {
   describe('GET /init/connect', function() {
@@ -39,7 +40,9 @@ describe('Auth handlers', function() {
             .end(cb);
         },
         function requestMongo(res, cb) {
-          AccessToken.findOne({ token: helpers.MOCK_SERVER_TOKEN }, cb);
+          AccessToken.findOne({
+            token: helpers.MOCK_SERVER_TOKEN
+          }, cb);
         },
         function assertToken(token, cb) {
           token.should.have.property('companyId', new ObjectId(helpers.MOCK_SERVER_COMPANY_ID));
