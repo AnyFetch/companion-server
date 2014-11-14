@@ -1,5 +1,7 @@
 #!/bin/env node
 "use strict";
+require("newrelic");
+
 
 require('heroku-self-ping')(process.env.COMPANION_URL);
 
