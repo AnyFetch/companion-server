@@ -38,7 +38,7 @@
   "devDependencies": {
     "jshint": "^2.5.10",
     "mocha": "^2.0.1",
-    "mocha-mongoose": "^1.0.2",
+    "mocha-mongoose": "^1.0.3",
     "mongodb": "^1.4.23",
     "should": "^4.3.0",
     "sinon": "^1.12.1"
