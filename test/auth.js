@@ -17,7 +17,7 @@ describe('Auth handlers', function() {
       request(app)
         .get('/init/connect')
         .expect(302)
-        .expect('Location', 'http://localhost:8001/oauth/authorize?client_id=test&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Finit%2Fcallback')
+        .expect('Location', 'http://localhost:8001/oauth/authorize?replace_existing_token=true&approval_prompt=true&client_id=test&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Finit%2Fcallback')
         .end(done);
     });
   });
