@@ -6,5 +6,11 @@
 
 var config = require('../config/configuration.js');
 
-var opbeat = require('opbeat');
-module.exports.opbeat = opbeat.createClient(config.services.opbeat);
+/* istanbul ignore next */
+if(config.services.opbeat.secretToken) {
+  var opbeat = require('opbeat');
+  module.exports.opbeat = opbeat(config.services.opbeat);
+}
+else {
+  module.exports.opbeat = null;
+}
