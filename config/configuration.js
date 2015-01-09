@@ -1,6 +1,6 @@
 'use strict';
 
-var Anyfetch = require ('anyfetch');
+var Anyfetch = require('anyfetch');
 
 /**
  * @file Defines the app settings.

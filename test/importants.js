@@ -3,7 +3,7 @@
 var should = require('should');
 var request = require('supertest');
 var async = require('async');
-var mongoose = require ('mongoose');
+var mongoose = require('mongoose');
 var ObjectId = mongoose.Types.ObjectId;
 
 var app = require('../app.js');
@@ -124,7 +124,7 @@ describe("Important documents endpoint", function() {
       async.waterfall([
         deleteImportantDocument,
         function queryMongo(res, cb) {
-          ImportantDocument.findOne({ document: new ObjectId(helpers.MOCK_SERVER_DOC_ID) }, cb);
+          ImportantDocument.findOne({document: new ObjectId(helpers.MOCK_SERVER_DOC_ID)}, cb);
         },
         function assert(document, cb) {
           should(document).not.have.property('_id');
