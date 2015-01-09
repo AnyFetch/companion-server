@@ -45,8 +45,8 @@ describe('Auth handlers', function() {
           }, cb);
         },
         function assertToken(token, cb) {
-          token.should.have.property('companyId', new ObjectId(helpers.MOCK_SERVER_COMPANY_ID));
-          token.should.have.property('userId', new ObjectId(helpers.MOCK_SERVER_USER_ID));
+          token.should.have.property('companyId');
+          token.should.have.property('userId');
           cb();
         }
       ], done);

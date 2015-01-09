@@ -1,7 +1,7 @@
 "use strict";
 
 var Anyfetch = require('anyfetch');
-var restify = require ('restify');
+var restify = require('restify');
 
 var config = require('../config/configuration.js');
 

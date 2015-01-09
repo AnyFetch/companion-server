@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node ./bin/server.js",
     "test": "NODE_ENV=test mocha -R spec",
-    "lint": "jshint lib/ test/ config/ bin/"
+    "lint": "jshint bin/ config/ lib/ test/ app.js && jscs bin/ config/ lib/ test/ app.js"
   },
   "repository": {
     "type": "git",
@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/AnyFetch/companion-server",
   "dependencies": {
-    "anyfetch": "^2.1.7",
+    "anyfetch": "^2.1.8",
     "async": "^0.9.0",
     "auto-load": "^1.1.0",
     "dotenv": "^0.4.0",
