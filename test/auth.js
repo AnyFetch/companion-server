@@ -26,7 +26,8 @@ describe('Auth handlers', function() {
       request(app)
         .get('/init/callback?code=test')
         .expect(302)
-        .expect('Location', 'https://localhost/done/' + helpers.MOCK_SERVER_TOKEN)
+        .expect('Location', /^https:\/\/localhost\/done\//)
+        .expect('Location', new RegExp(helpers.MOCK_SERVER_TOKEN))
         .end(done);
     });
 
