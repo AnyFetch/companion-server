@@ -14,6 +14,7 @@ module.exports = function(server) {
   server.get('/init/callback', handlers.init.callback.get);
 
   server.get('/start', middlewares.auth, handlers.start.index.get);
+  server.get('/providers', middlewares.auth, handlers.providers.index.get);
 
   server.get('/documents', middlewares.auth, handlers.documents.index.get);
   server.get('/documents/:id', middlewares.auth, handlers.documents.id.index.get);
