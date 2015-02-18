@@ -22,26 +22,26 @@
   },
   "homepage": "https://github.com/AnyFetch/companion-server",
   "dependencies": {
-    "anyfetch": "^2.1.8",
+    "anyfetch": "^2.1.9",
     "async": "^0.9.0",
     "auto-load": "^1.1.0",
-    "dotenv": "^0.4.0",
+    "dotenv": "^0.5.1",
     "heroku-self-ping": "~1.1.1",
-    "mongoose": "^3.8.20",
-    "newrelic": "^1.14.1",
-    "opbeat": "~1.0.6",
+    "mongoose": "^3.8.23",
+    "newrelic": "^1.16.2",
+    "opbeat": "~1.1.2",
     "rarity": "^2.1.1",
-    "restify": "^2.8.3",
+    "restify": "^2.8.5",
     "restify-logger": "^2.0.1",
     "supertest": "^0.15.0"
   },
   "devDependencies": {
-    "jshint": "^2.5.10",
-    "mocha": "^2.0.1",
+    "jshint": "^2.6.0",
+    "mocha": "^2.1.0",
     "mocha-mongoose": "^1.0.3",
-    "mongodb": "^1.4.23",
-    "should": "^4.3.0",
-    "jscs": "^1.8.1",
-    "sinon": "^1.12.1"
+    "mongodb": "^1.4.31",
+    "should": "^5.0.0",
+    "jscs": "^1.11.3",
+    "sinon": "^1.12.2"
   }
 }
