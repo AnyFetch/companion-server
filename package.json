@@ -17,6 +17,9 @@
   ],
   "author": "Robin Ricard",
   "license": "MIT",
+  "engines": {
+    "node": "=0.10"
+  },
   "bugs": {
     "url": "https://github.com/AnyFetch/companion-server/issues"
   },
