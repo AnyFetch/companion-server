@@ -7,7 +7,7 @@ var opbeatClient = require('./vendors').opbeat;
  * Will be logged on the console and sent a third-party logging service.
  * The `extra` hash  can be used to store additional informations.
  */
- /* istanbul ignore next */
+/* istanbul ignore next */
 module.exports.logError = function logError(err, req, extra) {
   // No logging on test or if err is undefined
   if(process.env.NODE_ENV === "test" || !err) {
