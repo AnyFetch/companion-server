@@ -30,7 +30,7 @@
     "auto-load": "^1.1.0",
     "dotenv": "^0.5.1",
     "heroku-self-ping": "~1.1.1",
-    "mongoose": "^3.8.23",
+    "mongoose": "3.8.23",
     "newrelic": "^1.16.2",
     "opbeat": "~1.1.2",
     "rarity": "^2.1.1",
